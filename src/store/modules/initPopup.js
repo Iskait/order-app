@@ -18,7 +18,7 @@ export const initPopup = {
     ],
   }),
   mutations: {
-    setVisibleForm(state) {
+    toggleVisibleForm(state) {
       state.visibleForm = !state.visibleForm;
     },
     chooseCity(state, payload) {

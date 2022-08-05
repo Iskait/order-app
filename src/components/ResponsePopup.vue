@@ -1,6 +1,6 @@
 <template>
   <div class="self-center border-black border p-4 rounded-md">
-    <span v-html="reponseData" class="text-center"></span>
+    <span v-html="responseData" class="text-center"></span>
   </div>
   <button
     @click="toggleBack"
@@ -10,20 +10,16 @@
   </button>
 </template>
 
-<script>
-import { mapMutations, mapState } from "vuex";
-export default {
-  computed: {
-    ...mapState({
-      reponseData: (state) => state.responsePopup.responseData,
-    }),
-  },
-  methods: {
-    ...mapMutations(["toggleForms", "setVisibleForm"]),
-    toggleBack() {
-      this.toggleForms();
-      this.setVisibleForm();
-    }
-  },
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
+const responseData = computed(() => store.state.responsePopup.responseData);
+const toggleForms = () => store.commit("toggleForms");
+const toggleVisibleForm = () => store.commit("toggleVisibleForm");
+const toggleBack = () => {
+  toggleForms();
+  toggleVisibleForm();
 };
 </script>

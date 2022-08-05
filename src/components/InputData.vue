@@ -9,9 +9,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['field'],
-};
+<script setup>
+defineProps({
+  field: {
+    required: true,
+    type: Object
+  }
+})
 </script>
 

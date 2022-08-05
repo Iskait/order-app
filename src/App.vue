@@ -4,39 +4,28 @@
   >
     <template v-if="showInitForm">
       <transition name="fade">
-        <order v-if="!isVisible" />
+        <Order v-if="!isVisible" />
       </transition>
       <transition name="slide-down">
-        <send-form v-if="isVisible" />
+        <SendForm v-if="isVisible" />
       </transition>
     </template>
-    <response-popup v-if="!showInitForm"></response-popup>
+    <ResponsePopup v-if="!showInitForm" />
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
+<script setup>
+import { useStore } from "vuex";
+import { computed } from "vue";
 import Order from "./components/Order.vue";
 import SendForm from "./components/SendForm.vue";
 import ResponsePopup from "./components/ResponsePopup.vue";
 
-export default {
-  name: "App",
-  components: {
-    Order,
-    SendForm,
-    ResponsePopup
-  },
-  computed: {
-    ...mapState({
-      isVisible: (state) => state.initPopup.visibleForm,
-      showInitForm: (state) => state.showInitForm,
-    }),
-  },
-};
+const store = useStore();
+const isVisible = computed(() => store.state.initPopup.visibleForm);
+const showInitForm = computed(() => store.state.showInitForm);
 </script>
 <style>
-
 .fade-enter-active {
   transition: all 0.3s;
 }

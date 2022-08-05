@@ -1,35 +1,23 @@
 <template>
   <transition name="slide-fade">
     <div class="flex justify-around">
-      <order-button
-      v-for="(city, index) in cities"
-      @click="takeOrder(index)">{{ city }}</order-button>
+      <OrderButton v-for="(city, index) in cities" @click="takeOrder(index)">
+        {{ city }}
+      </OrderButton>
     </div>
   </transition>
 </template>
 
-<script>
-import OrderButton from './OrderButton.vue';
-import { mapMutations } from 'vuex';
-export default {
-  components: {
-    OrderButton,
-    },
-    data() {
-      return {
-        cities: ['Москву', 'Санкт-Петербург']
-      }
-    },
-    methods: {
-      ...mapMutations([
-        'setVisibleForm',
-        'chooseCity',
-    ]),
-    takeOrder(index) {
-      this.setVisibleForm();
-      this.chooseCity(index+1);
-    }
-  }
-}
+<script setup>
+import OrderButton from "./OrderButton.vue";
+import { useStore } from "vuex";
 
+const store = useStore();
+const cities = ["Москву", "Санкт-Петербург"];
+const toggleVisibleForm = () => store.commit("toggleVisibleForm");
+const chooseCity = (payload) => store.commit("chooseCity", payload);
+const takeOrder = (index) => {
+  toggleVisibleForm();
+  chooseCity(index + 1);
+};
 </script>
